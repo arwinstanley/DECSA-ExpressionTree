@@ -40,24 +40,24 @@ public class ExpressionTree extends TreeNode implements Expression {
 	}
 	
 	public int evalTree() {
-         return evalTree(this, this.getLeft(), this.getRight());
+         return evalTree(this);
 	}
 	
-	private int evalTree(TreeNode n,TreeNode l, TreeNode r) {
+	private int evalTree(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) {
 			return Integer.parseInt((String)n.getValue()) ;
 		}
 		String test = (String) n.getValue();
 		switch(test){
-			case "+": return (evalTree(l, l.getLeft(), l.getRight()) + evalTree(r, r.getLeft(), r.getRight()) );
+			case "+": return (evalTree(n.getLeft()) + evalTree(n.getRight()));
 			
-			case "*": return (evalTree(l, l.getLeft(), l.getRight()) * evalTree(r, r.getLeft(), r.getRight()) );
+			case "*": return (evalTree(n.getLeft()) * evalTree(n.getRight()));
 			
-			case "/": return (evalTree(l, l.getLeft(), l.getRight()) / evalTree(r, r.getLeft(), r.getRight()) );
+			case "/": return (evalTree(n.getLeft()) / evalTree(n.getRight()));
 
-			case "-": return (evalTree(l, l.getLeft(), l.getRight()) - evalTree(r, r.getLeft(), r.getRight()) );
+			case "-": return (evalTree(n.getLeft()) - evalTree(n.getRight()));
 			
-			case "%": return (evalTree(l, l.getLeft(), l.getRight()) % evalTree(r, r.getLeft(), r.getRight()) );
+			case "%": return (evalTree(n.getLeft()) % evalTree(n.getRight()));
 			
 			default: return 0;
 		}
@@ -65,30 +65,60 @@ public class ExpressionTree extends TreeNode implements Expression {
 	}
 	
 	public String toPrefixNotation() {
-		return ((String)this.getValue() + toPrefixNotation(this.getLeft()) + toPrefixNotation(this.getRight()));
+		return toPrefixNotation(this);
 	}
 	
 	private String toPrefixNotation(TreeNode n) {
-		if(n.getLeft() == null) {
+		if(n.getLeft() == null && n.getRight() == null) 
 			return (String)n.getValue();
-		}
-		
-		////////////////////////////////
-		
+		return ((String)n.getValue())+ toPrefixNotation(n.getLeft()) + toPrefixNotation(n.getRight());
 	}
 	public String toInfixNotation() {
-		
+		return toInfixNotation(this);
+	}
+	private String toInfixNotation(TreeNode n) {
+		if(n.getLeft() == null && n.getRight() == null) 
+			return (String)n.getValue();
+		return "(" + toInfixNotation(n.getLeft())+ ((String)n.getValue()) + toInfixNotation(n.getRight()) + ")";
 	}
 	public String toPostfixNotation() {
-		
+		return toPostfixNotation(this);
+	}
+	private String toPostfixNotation(TreeNode n) {
+		if(n.getLeft() == null && n.getRight() == null) 
+			return (String)n.getValue();
+		return toPostfixNotation(n.getLeft())+toPostfixNotation(n.getRight())+ ((String)n.getValue());
 	}
 	public int postfixEval(String[] exp) {
-		
+		Stack<Integer> eval = new Stack<Integer>();
+		int out = 0;
+		for(String s: exp) {
+			if(!isOperator(s)) 
+				eval.push(Integer.parseInt(s));
+			else
+				switch(s){
+				case "+": eval.push(eval.pop() + eval.pop());
+				
+				case "*": eval.push(eval.pop() * eval.pop());
+				
+				case "/": eval.push(eval.pop() / eval.pop());
+
+				case "-": eval.push(eval.pop() - eval.pop());
+				
+				case "%": eval.push(eval.pop() % eval.pop());
+				}	
+		}
+		return eval.pop();
 	}
 	public boolean isOperator(TreeNode tree) {
 
 		String str = (String) tree.getValue();
 		
+		if(str.equals("+")||str.equals("*")||str.equals("/")||str.equals("-")||str.equals("%"))
+			return true;
+		return false;
+	}
+	public boolean isOperator(String str) {
 		if(str.equals("+")||str.equals("*")||str.equals("/")||str.equals("-")||str.equals("%"))
 			return true;
 		return false;
