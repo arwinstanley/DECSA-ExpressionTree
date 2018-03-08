@@ -2,9 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class ExpressionTester {
-	public static final String theDefault = "postFixExpressions.txt";
+	public static final String THEDEFAULT = "postFixExpressions.txt";
 	/* 
 	 * @author WinstanleyA
 	 * @Date 3/8/18
@@ -39,23 +40,36 @@ public class ExpressionTester {
 		}
 		return input;
 	}
-		public String [][] list(Scanner file){
-			String [][] output;
-			
+		public static ArrayList<String[]> list(Scanner file){
+			ArrayList<String[]> output = new ArrayList<String[]>();
+			while(file.hasNextLine()) {
+				String temp = file.nextLine();
+				String[] tempArr = temp.split(" ");
+			    output.add(tempArr);
+			}
+			return output;
 		}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner input = null;
+		PrintWriter output = writer("myAnswers.txt");
 		if(args.length>0)
 			input = reader(args[0]);
 		else
-			input = reader(theDefault);
+			input = reader(THEDEFAULT);
 		
 		if(input == null) {
 			System.out.println("Please input a valid file");
 			Scanner keyboard = new Scanner(System.in);
 			input = reader(keyboard.next());
+			keyboard.close();
 		}
+		
+		ArrayList<String[]> test = list(input);
+		for(String[] post: test) {
+			ExpressionTree example =
+		}
+		
 		
 		
 		
