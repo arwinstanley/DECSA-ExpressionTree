@@ -98,14 +98,15 @@ public class ExpressionTree extends TreeNode implements Expression {
 			else
 				switch(s){
 				case "+": eval.push(eval.pop() + eval.pop());
-				
+				break;
 				case "*": eval.push(eval.pop() * eval.pop());
-				
+				break;
 				case "/": eval.push(eval.pop() / eval.pop());
-
+				break;
 				case "-": eval.push(eval.pop() - eval.pop());
-				
+				break;
 				case "%": eval.push(eval.pop() % eval.pop());
+				break;
 				}	
 		}
 		return eval.pop();
