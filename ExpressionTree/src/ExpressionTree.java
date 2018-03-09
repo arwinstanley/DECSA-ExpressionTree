@@ -58,7 +58,7 @@ public class ExpressionTree extends TreeNode implements Expression {
 			case "/": return (evalTree(n.getLeft()) / evalTree(n.getRight()));
 
 			case "-": return (evalTree(n.getLeft()) - evalTree(n.getRight()));   ///// These have not been bug tested so they are 
-																					   Being commented out
+												Being commented out
 			case "%": return (evalTree(n.getLeft()) % evalTree(n.getRight()));
 */			
 			default: return 0;
