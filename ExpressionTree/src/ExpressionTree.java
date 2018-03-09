@@ -1,53 +1,55 @@
+	/**
+	 * @author arwinstanley
+	 * @Date 3/8/18
+	 * This class is to represent an expressionTree extending treeNode and implementing the Expression interface
+	 */
 import java.util.*;
 public class ExpressionTree extends TreeNode implements Expression {
 	private Stack<TreeNode> objStack = new Stack<TreeNode>();
+	/**
+	* 
+	* One parameter constructor for ExpressionTree uses the super constructor from TreeNode
+	* 
+	* @param exp an array of strings which is an expression in postfix notation 
+	* @return the root of the TreeNode representing an expression tree
+	*/
 	public ExpressionTree(String[] str) {
-		super("");
+		super(" ");
 		TreeNode temp = buildTree(str);
-		this.setValue(temp);
+		this.setValue(temp.getValue()+"");
 		this.setLeft(temp.getLeft());
 		this.setRight(temp.getRight());
 		
 	}
+	@Override
 	public TreeNode buildTree(String[] exp) {
-		
-		for( int i = 0; i < exp.length; i++ ) {
-			TreeNode x = new TreeNode(exp[i]);
-			objStack.push(x);
-		}
-		
-		Stack<TreeNode> temp = new Stack<TreeNode>();
-		
-		while(!objStack.isEmpty()) {
-			if(isOperator(objStack.peek())) {
-				TreeNode leftTree = null;
-				TreeNode rightTree = null;
-				if(!temp.isEmpty())
-					leftTree = temp.pop();
-				if(!temp.isEmpty())
-					rightTree = temp.pop();
-				TreeNode toAdd = new TreeNode(objStack.pop(), leftTree, rightTree);
-				if(objStack.isEmpty())
-					return toAdd;
+
+		for(String x: exp) {
+			TreeNode ele = new TreeNode(x);
+			if(isOperator(ele)) {
+				TreeNode leftTree = objStack.pop();
+				TreeNode rightTree = objStack.pop();
+				TreeNode toAdd = new TreeNode((ele.getValue()+""), rightTree, leftTree);
 				objStack.push(toAdd);
 			}
 			else {
-				temp.push(objStack.pop());
+				objStack.push(ele);
 			}
 		}
-		return null;
+	
+			return objStack.pop();
 	 
 	}
-	
+	@Override
 	public int evalTree() {
          return evalTree(this);
 	}
 	
 	private int evalTree(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) {
-			return Integer.parseInt((String)n.getValue()) ;
+			return Integer.parseInt(n.getValue()+"") ;
 		}
-		String test = (String) n.getValue();
+		String test = n.getValue()+"";
 		switch(test){
 			case "+": return (evalTree(n.getLeft()) + evalTree(n.getRight()));
 			
@@ -63,35 +65,37 @@ public class ExpressionTree extends TreeNode implements Expression {
 		}
 		
 	}
-	
+	@Override
 	public String toPrefixNotation() {
 		return toPrefixNotation(this);
 	}
 	
 	private String toPrefixNotation(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) 
-			return (String)n.getValue();
-		return ((String)n.getValue())+ toPrefixNotation(n.getLeft()) + toPrefixNotation(n.getRight());
+			return n.getValue()+"";
+		return (n.getValue()+"")+ toPrefixNotation(n.getLeft()) + toPrefixNotation(n.getRight());
 	}
+	@Override
 	public String toInfixNotation() {
 		return toInfixNotation(this);
 	}
 	private String toInfixNotation(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) 
-			return (String)n.getValue();
-		return "(" + toInfixNotation(n.getLeft())+ ((String)n.getValue()) + toInfixNotation(n.getRight()) + ")";
+			return n.getValue()+"";
+		return "(" + toInfixNotation(n.getLeft())+ (n.getValue()+"") + toInfixNotation(n.getRight()) + ")";
 	}
+	@Override
 	public String toPostfixNotation() {
 		return toPostfixNotation(this);
 	}
 	private String toPostfixNotation(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) 
-			return (String)n.getValue();
-		return toPostfixNotation(n.getLeft())+toPostfixNotation(n.getRight())+ ((String)n.getValue());
+			return n.getValue()+"";
+		return toPostfixNotation(n.getLeft())+toPostfixNotation(n.getRight())+ (n.getValue()+"");
 	}
+	@Override
 	public int postfixEval(String[] exp) {
 		Stack<Integer> eval = new Stack<Integer>();
-		int out = 0;
 		for(String s: exp) {
 			if(!isOperator(s)) 
 				eval.push(Integer.parseInt(s));
@@ -113,7 +117,7 @@ public class ExpressionTree extends TreeNode implements Expression {
 	}
 	public boolean isOperator(TreeNode tree) {
 
-		String str = (String) tree.getValue();
+		String str = tree.getValue()+"";
 		
 		if(str.equals("+")||str.equals("*")||str.equals("/")||str.equals("-")||str.equals("%"))
 			return true;
