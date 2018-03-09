@@ -54,13 +54,13 @@ public class ExpressionTree extends TreeNode implements Expression {
 			case "+": return (evalTree(n.getLeft()) + evalTree(n.getRight()));
 			
 			case "*": return (evalTree(n.getLeft()) * evalTree(n.getRight()));
-			
+/*			
 			case "/": return (evalTree(n.getLeft()) / evalTree(n.getRight()));
 
-			case "-": return (evalTree(n.getLeft()) - evalTree(n.getRight()));
-			
+			case "-": return (evalTree(n.getLeft()) - evalTree(n.getRight()));   ///// These have not been bug tested so they are 
+																					   Being commented out
 			case "%": return (evalTree(n.getLeft()) % evalTree(n.getRight()));
-			
+*/			
 			default: return 0;
 		}
 		
@@ -77,7 +77,7 @@ public class ExpressionTree extends TreeNode implements Expression {
 	}
 	@Override
 	public String toInfixNotation() {
-		return toInfixNotation(this);
+		return (toInfixNotation(this)).substring(1, (toInfixNotation(this).lastIndexOf(')')));
 	}
 	private String toInfixNotation(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) 
@@ -105,12 +105,12 @@ public class ExpressionTree extends TreeNode implements Expression {
 				break;
 				case "*": eval.push(eval.pop() * eval.pop());
 				break;
-				case "/": eval.push(eval.pop() / eval.pop());
+/*				case "/": eval.push(eval.pop() / eval.pop());
 				break;
-				case "-": eval.push(eval.pop() - eval.pop());
+				case "-": eval.push(eval.pop() - eval.pop());          //////Same here
 				break;
 				case "%": eval.push(eval.pop() % eval.pop());
-				break;
+				break;        */
 				}	
 		}
 		return eval.pop();
@@ -119,12 +119,12 @@ public class ExpressionTree extends TreeNode implements Expression {
 
 		String str = tree.getValue()+"";
 		
-		if(str.equals("+")||str.equals("*")||str.equals("/")||str.equals("-")||str.equals("%"))
+		if(str.equals("+")||str.equals("*")/*||str.equals("/")||str.equals("-")||str.equals("%")*/)
 			return true;
 		return false;
 	}
 	public boolean isOperator(String str) {
-		if(str.equals("+")||str.equals("*")||str.equals("/")||str.equals("-")||str.equals("%"))
+		if(str.equals("+")||str.equals("*")/*||str.equals("/")||str.equals("-")||str.equals("%")*/)
 			return true;
 		return false;
 	}
