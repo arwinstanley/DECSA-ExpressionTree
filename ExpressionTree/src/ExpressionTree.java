@@ -44,7 +44,13 @@ public class ExpressionTree extends TreeNode implements Expression {
 	public int evalTree() {
          return evalTree(this);
 	}
-	
+	/**
+	 * 
+	 * evaluates the tree to an integer
+	 * 
+	 * @param n is the TreeNode used for recursion
+	 * @return an int value that the expression tree equals 
+	 */
 	private int evalTree(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) {
 			return Integer.parseInt(n.getValue()+"") ;
@@ -58,7 +64,7 @@ public class ExpressionTree extends TreeNode implements Expression {
 			case "/": return (evalTree(n.getLeft()) / evalTree(n.getRight()));
 
 			case "-": return (evalTree(n.getLeft()) - evalTree(n.getRight()));   ///// These have not been bug tested so they are 
-												Being commented out
+																					   Being commented out
 			case "%": return (evalTree(n.getLeft()) % evalTree(n.getRight()));
 */			
 			default: return 0;
@@ -69,7 +75,13 @@ public class ExpressionTree extends TreeNode implements Expression {
 	public String toPrefixNotation() {
 		return toPrefixNotation(this);
 	}
-	
+	/**
+	 * 
+	 * evaluates the tree into prefix notation
+	 * 
+	 * @param n the TreeNode for recursion
+	 * @return a String of the expression in prefix notation
+	 */
 	private String toPrefixNotation(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) 
 			return n.getValue()+"";
@@ -79,6 +91,13 @@ public class ExpressionTree extends TreeNode implements Expression {
 	public String toInfixNotation() {
 		return (toInfixNotation(this)).substring(1, (toInfixNotation(this).lastIndexOf(')')));
 	}
+	/**
+	 * 
+	 * evaluates the tree into infix notation with parenthesis to separate
+	 * 
+	 * @param n the TreeNode for recursion
+	 * @return a String of the expression in infix notation
+	 */
 	private String toInfixNotation(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) 
 			return n.getValue()+"";
@@ -88,6 +107,13 @@ public class ExpressionTree extends TreeNode implements Expression {
 	public String toPostfixNotation() {
 		return toPostfixNotation(this);
 	}
+	/**
+ 	* 
+ 	* evaluates the tree into postfix notation
+ 	* 
+ 	* @param n is a TreeNode used for recursion
+ 	* @return a String of the expression in postfix notation
+ 	*/
 	private String toPostfixNotation(TreeNode n) {
 		if(n.getLeft() == null && n.getRight() == null) 
 			return n.getValue()+"";
@@ -115,6 +141,13 @@ public class ExpressionTree extends TreeNode implements Expression {
 		}
 		return eval.pop();
 	}
+	/**
+ 	* 
+ 	* checks if the treenode is an operator
+ 	* 
+ 	* @param tree is aTreeNode to test
+ 	* @return true if the true node represents an operator
+ 	*/
 	public boolean isOperator(TreeNode tree) {
 
 		String str = tree.getValue()+"";
@@ -123,6 +156,13 @@ public class ExpressionTree extends TreeNode implements Expression {
 			return true;
 		return false;
 	}
+	/**
+ 	* 
+ 	* checks if the string is an operator
+ 	* 
+ 	* @param tree is a String to test
+ 	* @return true if the true node represents an operator
+ 	*/
 	public boolean isOperator(String str) {
 		if(str.equals("+")||str.equals("*")/*||str.equals("/")||str.equals("-")||str.equals("%")*/)
 			return true;
