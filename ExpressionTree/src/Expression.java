@@ -6,7 +6,7 @@
 public interface Expression {
 	/**
 	* 
-	* Creates a default Disk with a radius of 0
+	* Creates an ExpressionTree to extend the TreeNode Class
 	* 
 	* @param exp an array of strings which is an expression in postfix notation 
 	* @return the root of the TreeNode representing an expression tree
