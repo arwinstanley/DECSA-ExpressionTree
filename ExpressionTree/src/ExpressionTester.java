@@ -40,6 +40,13 @@ public class ExpressionTester {
 		}
 		return input;
 	}
+		/**
+		* 
+		* takes in all of the text in the txt document and turns it into an arraylist of string arrays
+		* 
+		* @param file is a scanner of the file you want to turn into arrays
+		* @return an array list of an array of strings
+		*/
 		public static ArrayList<String[]> list(Scanner file){
 			ArrayList<String[]> output = new ArrayList<String[]>();
 			while(file.hasNextLine()) {
@@ -49,6 +56,13 @@ public class ExpressionTester {
 			}
 			return output;
 		}
+		/**
+		* 
+		* main file for testing
+		* 
+		* @param args is all the files you want to read in
+		* @return none
+		*/
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner input = null;
