@@ -25,7 +25,7 @@ public class ExpressionTester {
 	}
 	/* 
 	 * @author WinstanleyA
-	 * @Date 9/26/17
+	 * @Date 3/8/18
 	 * @param fNme the name of the file you wish to read
 	 * @return input a Scanner to read the file you gave as input
 	 */
@@ -57,19 +57,30 @@ public class ExpressionTester {
 			input = reader(args[0]);
 		else
 			input = reader(THEDEFAULT);
-		
-		if(input == null) {
+		Scanner keyboard = new Scanner(System.in);
+		while(input == null) {
 			System.out.println("Please input a valid file");
-			Scanner keyboard = new Scanner(System.in);
 			input = reader(keyboard.next());
-			keyboard.close();
 		}
-		
+		keyboard.close();
 		ArrayList<String[]> test = list(input);
 		for(String[] post: test) {
-			ExpressionTree example =
+			ExpressionTree example = new ExpressionTree(post);
+			//output.println("Eval from tree");
+			output.println(example.evalTree());
+			//output.println("Prefix from tree");
+			output.println(example.toPrefixNotation());
+			//output.println("Infix from tree");
+			output.println(example.toInfixNotation());
+			//output.println("Postfix from tree");
+			output.println(example.toPostfixNotation());
+			//output.println("Eval from post");;
+			output.println(example.postfixEval(post));
+			output.println("");
+			output.println("");
 		}
-		
+		output.close();
+		input.close();
 		
 		
 		
