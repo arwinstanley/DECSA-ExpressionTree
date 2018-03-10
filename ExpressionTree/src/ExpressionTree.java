@@ -89,7 +89,7 @@ public class ExpressionTree extends TreeNode implements Expression {
 	}
 	@Override
 	public String toInfixNotation() {
-		return (toInfixNotation(this)).substring(1, (toInfixNotation(this).lastIndexOf(')')));
+		return (toInfixNotation(this)).substring(toInfixNotation(this).indexOf('('), (toInfixNotation(this).lastIndexOf(')')));
 	}
 	/**
 	 * 
